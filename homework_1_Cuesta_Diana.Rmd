@@ -40,4 +40,4 @@ WorldCities %>% ggplot(aes(x = population)) +
 + geom_histogram() +
 + xlab('New Population') + ylab ('New Count') + ggtitle ('My title')
 
-**“Finished assignment**
+**“Finished assignment 1**
