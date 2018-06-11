@@ -31,3 +31,13 @@ Region_col <- WorldCities$region
 unique(Region_col)
 
 **Finished questions 1 and 2**
+
+Question 3:
+
+WorldCities %>% select(country) %>% unique()
+
+WorldCities %>% ggplot(aes(x = population)) +
++ geom_histogram() +
++ xlab('New Population') + ylab ('New Count') + ggtitle ('My title')
+
+**“Finished assignment**
