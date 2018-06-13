@@ -11,33 +11,35 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 My Github repository for my assignments can be found at this URL: https://github.com/DiCuesta/compscix-415-2-assignments.git
 
-
+```{r}
+library(tidyverse)
+library(mdsr)
 data("WorldCities")
+```
 
 The data set has 23,018 observations and 10 variables
-
+```{r}
 glimpse(WorldCities)
-
 WorldCities <- head(WorldCities, 200)
-
 country_col <- WorldCities$country
-
 unique(country_col)
+```
 
-Extracting the Region Column
 
+#Extracting the Region Column and unique values
+
+```{r}
 Region_col <- WorldCities$region
-
 unique(Region_col)
+```
+
 
 **Finished questions 1 and 2**
 
-Question 3:
-
+#Question 3:
+```{r}
 WorldCities %>% select(country) %>% unique()
-
-WorldCities %>% ggplot(aes(x = population)) +
-+ geom_histogram() +
-+ xlab('New Population') + ylab ('New Count') + ggtitle ('My title')
+ WorldCities %>% ggplot(aes(x = population)) + geom_histogram() + xlab("New Population") + ylab ("New Count") + ggtitle ("My title")
+```
 
 **“Finished assignment 1**
