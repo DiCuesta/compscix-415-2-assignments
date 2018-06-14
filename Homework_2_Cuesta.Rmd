@@ -35,6 +35,7 @@ library(ggplot2)
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = class, y = cyl, shape = class))
 ```
+It is not useful because both variables are categorical.
 
 # 3.3.1
 ###What’s gone wrong with this code? Why are the points not blue?
