@@ -1,0 +1,18 @@
+---
+title: "COMPSCIX 415.2 Homework 4"
+Autor: Diana Cuesta
+output: html_document
+---
+## R Markdown
+##5.6.7 Exercises
+### Exercise 2
+####Come up with another approach that will give you the same output as not_cancelled %>% count(dest) and not_cancelled %>% count(tailnum, wt = distance) (without using count()).
+
+```{r}
+library(nycflights13)
+View(flights)
+not_cancelled <- flights %>% filter(!is.na(dep_delay), !is.na(arr_delay))
+
+```
+
+not_cancelled <- flights %>% filter(!is.na(dep_delay), !is.na(arr_delay))
