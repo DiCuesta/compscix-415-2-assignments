@@ -7,10 +7,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+
 ## R Markdown
 ##5.6.7 Exercises
-### Exercise 2
+
 ####Come up with another approach that will give you the same output as not_cancelled %>% count(dest) and not_cancelled %>% count(tailnum, wt = distance) (without using count()).
 ```{r}
 library(nycflights13)
@@ -45,5 +45,90 @@ Yes, there are a correlation between the number of flights cancelled per day and
 
 ####What does the sort argument to count() do. When might you use it?
 The sort argument to count sorts the results in order. It can be used this anytime we count and the sort.
+
+##10.5 Exercises
+
+####How can you tell if an object is a tibble? (Hint: try printing mtcars, which is a regular data frame).
+
+Tibbles have a refined print method that shows only the first 10 rows and all the columns that fit on screen.
+
+####Compare and contrast the following operations on a data.frame and equivalent tibble. What is different? Why might the default data frame behaviours cause you frustration?
+```{r}
+df <- data.frame(abc = 1, xyz = "a")
+df$x
+df[, "xyz"]
+df[, c("abc", "xyz")]
+
+tbl <- as_tibble(df)
+tbl$x
+tbl[, "xyz"]
+tbl[, c("abc", "xyz")]
+```
+
+####If you have the name of a variable stored in an object, e.g. var <- "mpg", how can you extract the reference variable from a tibble?
+You can use the double bracket, like df[[var]]. You cannot use the dollar sign, because df$var would look for a column named var
+
+
+####What option controls how many additional column names are printed at the footer of a tibble?
+The option n_extra determines the number of extra columns to print information for
+
+
+##Section 12.3.3
+
+####Why does this code fail?
+table4a %>% 
+  gather(1999, 2000, key = "year", value = "cases")
+  
+Because the column names cannot be numbers
+
+####Why does spreading this tibble fail? How could you add a new column to fix the problem?
+```{r}
+people <- tribble(
+  ~name,             ~key,    ~value,
+  #-----------------|--------|------
+  "Phillip Woods",   "age",       45,
+  "Phillip Woods",   "height",   186,
+  "Phillip Woods",   "age",       50,
+  "Jessica Cordero", "age",       37,
+  "Jessica Cordero", "height",   156
+)
+```
+Spreading the data frame fails because there are two rows with "age" for "Phillip Woods".
+
+####Tidy the simple tibble below. Do you need to spread or gather it? What are the variables?
+```{r}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+```
+We need to gather
+pregnant: logical ("yes", "no")
+female: logical
+count: integer
+
+##Section 12.4.3
+####What do the extra and fill arguments do in separate()? Experiment with the various options for the following two toy datasets.
+```{r}
+?separate
+```
+
+The extra argument tells separate what to do if there are too many pieces, and the fill argument if there aren't enough.
+```{r}
+tibble(data =  c("apple,raspberry,tomato","cucumber,lime,lettuce","banana,squash,orange")) %>% separate(data, c("red","green","yellow"))
+
+```
+
+####Both unite() and separate() have a remove argument. What does it do? Why would you set it to FALSE?
+
+Remove when set to FALSE includes the input column in the output
+```{r}
+tibble(data =  c("apple,raspberry,tomato","cucumber,lime,lettuce","banana,squash,orange")) %>% separate(data, c("red","green","yellow"),remove = FALSE)
+```
+
+I think it would be useful for validation.
+
+
 
 
