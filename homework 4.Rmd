@@ -1,0 +1,49 @@
+---
+title: "COMPSCIX 415.2 Homework 4 - Cuesta"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+## R Markdown
+##5.6.7 Exercises
+### Exercise 2
+####Come up with another approach that will give you the same output as not_cancelled %>% count(dest) and not_cancelled %>% count(tailnum, wt = distance) (without using count()).
+```{r}
+library(nycflights13)
+library(tidyverse)
+flights
+
+```
+```{r}
+flights %>%
+  group_by(dest) %>%
+  summarise(n = length(dest))
+```
+
+####Look at the number of cancelled flights per day. Is there a pattern? Is the proportion of cancelled flights related to the average delay?
+```{r}
+results <-
+  flights %>%
+  mutate(canceled_flights = (is.na(arr_delay) | is.na(dep_delay))) %>%
+  group_by(year, month, day) %>%
+  summarise(prop_canceled = mean(canceled_flights),
+            avg_delay = mean(dep_delay, na.rm = TRUE))
+
+results
+
+
+ ggplot(results, aes(x = avg_delay, prop_canceled)) +
+  geom_point() +
+  geom_smooth()
+```
+
+Yes, there are a correlation between the number of flights cancelled per day and the average delay.
+
+####What does the sort argument to count() do. When might you use it?
+The sort argument to count sorts the results in order. It can be used this anytime we count and the sort.
+
+
