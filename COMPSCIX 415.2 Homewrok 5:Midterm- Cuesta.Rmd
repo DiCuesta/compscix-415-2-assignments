@@ -62,4 +62,32 @@ heights <- read_csv("/Users/dianacuesta/Compscisx-415-2/rail_trail.csv")
 glimpse(heights)
 ```
 
+###Visualization (6 points)
+Critique this graphic: give only three examples of what is wrong with this graphic. Be concise.
+1) Graph is really difficult to read. Cateogries don't up to 100%. Colors doesn't say much. We don't know what the colors or numbers are representing. The categories are overlapping, there are women and man that are on all ages representing in other categories. Not sure a pie is the correct graph to represent the data to be anaylized.
+
+```{r}
+library(ggplot2)
+data(diamonds)
+ggplot(diamonds, aes(cut, carat,fill=color)) + geom_boxplot() + ggtitle("Diamond Price according Cut") + xlab("Type of Cut") + ylab("Carat") + coord_flip()
+
+```
+
+Improved Graph
+```{r}
+ggplot(diamonds, aes(factor(cut), carat, fill=cut)) + geom_boxplot() + ggtitle("Diamond Carat") + xlab("Type of Cut") + ylab("Carat") + coord_flip()
+```
+
+###Data munging and wrangling (6 points)
+Is this data “tidy”? If yes, leave it alone and go to the next problem. If no, make it tidy. Note: this data set is called table2 and is available in the tidyverse package. It should be ready for you to use after you’ve loaded the tidyverse package.
+
+Answer: It is not tydy.
+ 
+```{r}
+library(tidyverse)
+
+table2 %>%
+    spread(key = type, value = count)
+```
+
 
