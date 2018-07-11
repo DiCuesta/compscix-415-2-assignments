@@ -1,0 +1,65 @@
+---
+title: "COMPSCIX 415.2 Homework 5/Midterm"
+Autor: "Diana Cuesta"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The tidyverse packages (3 points)
+By now you’ve used at least five different packages from the tidyverse for plotting, data munging, reshaping data, importing/exporting data, and using tibbles (the tibble package is used for this without you even realizing it’s there).
+
+###Can you name which package is associated with each task below?
+Plotting - ggplot2
+Data munging/wrangling - dplyr
+Reshaping (speading and gathering) data - tidyr
+Importing/exporting data - readr 
+
+###Now can you name two functions that you’ve used from each package that you listed above for these tasks?
+
+Plotting - ggplot() and geom_point()
+Data munging/wrangling - spread(), gather() 
+Reshaping data - summarize(), groupby()
+Importing/exporting data - read_cvs() and write_cvs()
+
+##R Basics (1.5 points)
+
+1)Fix this code with the fewest number of changes possible so it works:
+My_data.name___is.too00ooLong! <- c( 1 , 2   , 3 )
+```{r}
+My_data_name___is_too00ooLong <- c( 1 , 2   , 3 )
+My_data_name___is_too00ooLong
+```
+
+2)Fix this code so it works:
+my_string <- C('has', 'an', 'error', 'in', 'it)
+```{r}
+my_string <- c('has','an','error','in','it')
+my_string
+```
+
+3)Look at the code below and comment on what happened to the values in the vector.
+my_vector <- c(1, 2, '3', '4', 5)
+my_vector
+
+```{r}
+my_vector <- c(1, 2, '3', '4', 5)
+my_vector
+```
+
+THe values in the vector were converted to strings.
+
+##Data import/export (3 points)
+Download the rail_trail.txt file from Canvas (in the Midterm Exam section) and successfully import it into R. Prove that it was imported successfully by including your import code and taking a glimpse of the result.
+
+Export the file into a comma-separated file and name it “rail_trail.csv”. Make sure you define the path correctly so that you know where it gets saved. Then reload the file. Include your export and import code and take another glimpse.
+ 
+```{r}
+library(tidyverse)
+heights <- read_csv("/Users/dianacuesta/Compscisx-415-2/rail_trail.csv")
+glimpse(heights)
+```
+
+
