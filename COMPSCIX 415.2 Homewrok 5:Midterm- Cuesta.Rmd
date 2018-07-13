@@ -115,18 +115,21 @@ Take a look at the txhousing data set that is included with the ggplot2 package 
 
 ```{r}
 library(ggplot2)
-View()
+
 ```
 
-During what time period is this data from?  from 2000 to 2015
-How many cities are represented? 46 cities
+####During what time period is this data from?
+Data is recorded monthly from Jan 2000 to Apr 2015, 187 entries for each city
+
+####How many cities are represented? 
+46 cities
 ```{r}
 cities <- select(txhousing,city)
 uniquecities <- count(unique(cities))
 uniquecities
 
 ```
-Which city, month and year had the highest number of sales?
+####Which city, month and year had the highest number of sales?
 ```{r}
 txhousing %>% 
   group_by(city,year,month) %>%
@@ -135,14 +138,27 @@ txhousing %>%
   )
 ```
 
-What kind of relationship do you think exists between the number of listings and the number of sales? Check your assumption and show your work.
+####What kind of relationship do you think exists between the number of listings and the number of sales? Check your assumption and show your work.
 
+The more listings, more houses are on the market which implies more sales.
 ```{r}
 ggplot(txhousing, aes(listings, sales)) + 
   geom_line(aes(group = city), alpha = 1/2)
+library(ggplot2)
+library(lubridate)
+
+txhm <- add_column(txhousing, dttm = date_decimal(txhousing$date, tz = "UTC"))
+
+normal.plot <- txhm %>%
+  ggplot(aes(x=dttm)) +
+  geom_col(aes(y = listings, fill = "listings")) +
+  geom_col(aes(y = sales, fill = "sales"))
+normal.plot
+
+
 ```
 
-What proportion of sales is missing for each city?
+####What proportion of sales is missing for each city?
 ```{r}
 txhousing %>%
   group_by(city) %>%
@@ -151,7 +167,7 @@ summarise(missingsales=sum(is.na(sales)))
 
 ```
 
-Looking at only the cities and months with greater than 500 sales:
+####Looking at only the cities and months with greater than 500 sales:
 ```{r}
 txhousing %>%
   group_by(city) %>%
@@ -160,7 +176,31 @@ txhousing %>%
 
 ```
 
-Are the distributions of the median sales price (column name median), when grouped by city, different? The same? Show your work.
-Any cities that stand out that you’d want to investigate further?
+####Are the distributions of the median sales price (column name median), when grouped by city, different? The same? Show your work.
+
+
+```{r}
+txhousing %>%
+  group_by(city) %>%
+  summarise(
+    sales = sum(sales),
+    median = median(sales)) %>%
+  filter(sales > 500)
+```
+
+####Any cities that stand out that you’d want to investigate further?
+I would like to investigate the biggest city, Houston, averages over ~4000 sales per month and the smallest city, San Marcos which averages ~20 sales per month.
+```{r}
+abilene <- txhousing %>% filter(city == "Houston")
+ggplot(abilene, aes(date, log(sales))) + 
+  geom_line()
+```
+```{r}
+abilene <- txhousing %>% filter(city == "San Marcos")
+ggplot(abilene, aes(date, log(sales))) + 
+  geom_line()
+```
+
+
 Why might we want to filter out all cities and months with sales less than 500?
 
