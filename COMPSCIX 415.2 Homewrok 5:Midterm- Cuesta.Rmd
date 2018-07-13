@@ -89,5 +89,78 @@ library(tidyverse)
 table2 %>%
     spread(key = type, value = count)
 ```
+2)Create a new column in the diamonds data set called price_per_carat that shows the price of each diamond per carat (hint: divide). Only show me the code, not the output.
 
+```{r}
+new_diamonds <- mutate(diamonds, price_per_carat= price/carat )
+new_diamonds
+```
+
+3) For each cut of diamond in the diamonds data set, how many diamonds, and what proportion, have a price > 10000 and a carat < 1.5? There are several ways to get to an answer, but your solution must use the data wrangling verbs from the tidyverse in order to get credit.
+Do the results make sense? Why?
+Do we need to be wary of any of these numbers? Why?
+```{r}
+result <- diamonds %>% 
+  group_by(cut) %>% 
+  summarise(
+  count = n() ,
+  countpricemore1000= sum(price > 1000),
+  countcaratless1.5 = sum (carat < 1.5))
+  
+result
+```
+
+##EDA (6 points)
+Take a look at the txhousing data set that is included with the ggplot2 package and answer these questions:
+
+```{r}
+library(ggplot2)
+View()
+```
+
+During what time period is this data from?  from 2000 to 2015
+How many cities are represented? 46 cities
+```{r}
+cities <- select(txhousing,city)
+uniquecities <- count(unique(cities))
+uniquecities
+
+```
+Which city, month and year had the highest number of sales?
+```{r}
+txhousing %>% 
+  group_by(city,year,month) %>%
+  summarise(
+    maxsales= max(sales)
+  )
+```
+
+What kind of relationship do you think exists between the number of listings and the number of sales? Check your assumption and show your work.
+
+```{r}
+ggplot(txhousing, aes(listings, sales)) + 
+  geom_line(aes(group = city), alpha = 1/2)
+```
+
+What proportion of sales is missing for each city?
+```{r}
+txhousing %>%
+  group_by(city) %>%
+summarise(missingsales=sum(is.na(sales)))
+  
+
+```
+
+Looking at only the cities and months with greater than 500 sales:
+```{r}
+txhousing %>%
+  group_by(city) %>%
+  summarise(sales = sum(sales)) %>%
+  filter(sales > 500)
+
+```
+
+Are the distributions of the median sales price (column name median), when grouped by city, different? The same? Show your work.
+Any cities that stand out that you’d want to investigate further?
+Why might we want to filter out all cities and months with sales less than 500?
 
