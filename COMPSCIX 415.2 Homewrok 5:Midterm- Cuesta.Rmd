@@ -2,6 +2,8 @@
 title: "COMPSCIX 415.2 Homework 5/Midterm"
 Autor: "Diana Cuesta"
 output: html_document
+github: https://github.com/DiCuesta/compscix-415-2-assignments.git
+
 ---
 
 ```{r setup, include=FALSE}
@@ -134,7 +136,7 @@ uniquecities
 txhousing %>% 
   group_by(city,year,month) %>%
   summarise(
-    maxsales= max(sales)
+    maxsales= max(sales) 
   )
 ```
 
@@ -202,5 +204,7 @@ ggplot(abilene, aes(date, log(sales))) +
 ```
 
 
-Why might we want to filter out all cities and months with sales less than 500?
+####Why might we want to filter out all cities and months with sales less than 500?
+
+We might want to filter out all cities and months with sales less than 500 to be able to perform a better analysis
 

@@ -1,0 +1,163 @@
+---
+title: "compscix4152_hw_6.html"
+output: html_document
+Autor: "Diana Cuesta"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(mosaicData)
+
+
+```
+
+####Look at the help file on this dataset to learn a bit about it. Note that the help file only exists if you are using the dataset from the mosaicData package. If you are loading the dataset from the csv file, do a Google search of this dataset and package name to help answer the first two questions below.
+
+###What variables are in this data set?
+3 Variables : Outcome, Smoker, Age
+###How many observations are there and what does each represent?
+1,314 observations which represent the number of rows.
+
+####Create a table (use the R code below as a guide) and a visualization of the relationship between smoking status and outcome, ignoring age. What do you see? Does it make sense?
+```{r}
+library(mosaicData)
+library(tidyverse)
+library(ggplot2)
+NewWhickham <- Whickham %>% count( outcome , smoker )
+NewWhickham
+ggplot(data = NewWhickham) +
+  geom_bar(mapping = aes(x = smoker, y = n, fill=outcome), stat = "identity")
+```
+
+Data does not make sense as we are not taking the age as part of the visualization. The number of dead people who smokes is less that non-smokers.
+
+
+
+####Recode the age variable into an ordered factor with three categories: age <= 44, age > 44 & age <= 64, and age > 64. Now, recreate visualization from above, but facet on your new age factor. What do you see? Does it make sense?
+```{r}
+library(tidyverse)
+library(forcats)
+library(mosaicData)
+library(ggplot2)
+
+NewWhickham <- Whickham %>% count( outcome , smoker )
+
+
+
+NewWhickhamwithage <- Whickham %>% filter ( age > 44) %>% count( outcome , smoker , cat_age = case_when(age < 44 ~ 'Age <=44',
+                   age > 44 & age <=64 ~ 'age >44 & age <=64',
+                   age > 64 ~ 'age > 64')) 
+NewWhickhamwithage
+
+ggplot(data = NewWhickhamwithage) +
+  geom_bar(mapping = aes(x = smoker, y = n, fill=outcome), stat = "identity")
+```
+
+
+
+
+Exercise 2
+The Central Limit Theorem states that the sampling distribution of sample means is approximately Normal, regardless of the distribution of your population. For this exercise our population distribution will be a Gamma(1,2) distribution, and we’ll show that the sampling distribution of the mean is in fact normally distributed.
+
+Generate a random sample of size n = 10000 from a gamma(1,2) distribution and plot a histogram or density curve. Use the code below to help you get your sample.
+
+```{r}
+
+library(tidyverse)
+n <- 10000
+gamma_samp <- tibble(x = rgamma(n, shape = 1, scale = 2))
+x <- rgamma(n,shape=1,scale=2)
+hist(x,prob=T,main='Histogram & Density curve')
+lines(density(x),col='red',lwd=2)
+
+```
+
+#### look at ?rgamma to read about this function
+```{r}
+?rgamma
+```
+
+####What is the mean and standard deviation of your sample? They should both be close to 2 because for a gamma distribution:
+
+```{r}
+n <- 10000
+x <- rgamma(n,shape=1,scale=2)
+mean <- mean(x)
+
+mean
+sd
+
+```
+
+####Pretend the distribution of our population of data looks like the plot above. Now take a sample of size n = 30 from a Gamma(1,2) distribution, plot the histogram or density curve, and calculate the mean and standard deviation.
+
+```{r}
+library(tidyverse)
+n <- 30
+x <- rgamma(n,shape=1,scale=2)
+hist(x,prob=T,main='Histogram & Density curve')
+lines(density(x),col='red',lwd=2)
+#Calculating the mean
+mean <- mean(x)
+mean
+#Calculating the standart deviation
+sd <- sd(x)
+sd
+```
+
+####Take a sample of size n = 30, again from the Gamma(1,2) distribution, calculate the mean, and assign it to a vector named mean_samp. Repeat this 10000 times!!!! The code below might help.
+Make a histogram of your collection of means from above (mean_samp).
+
+```{r}
+# create a vector with 30 NAs
+mean_samp <- rep(NA, 10000)
+
+# start a loop
+for(i in 1:10000) {
+  g_samp <- rgamma(30, shape = 1, scale = 2)
+  mean_samp[i] <- mean(g_samp)
+}
+# Convert vector to a tibble
+hist(mean_samp)
+mean_samp <- tibble(mean_samp)
+mean_samp
+```
+
+####Calculate the mean and standard deviation of all of your sample means.
+```{r}
+mean <- colMeans(mean_samp, na.rm = TRUE)
+mean
+sd <- sapply(mean_samp,sd, na.rm = TRUE)
+sd
+
+
+```
+In this case, the mean of the sampling distribution is close to 2 and the standard deviation of the sampling distribution is close 0.3631
+
+####Did anything surprise you about your answers to #6?
+The standar deviation is really small compared to the one calculated with a sample of 1000. However the mean is almost the same.
+
+According to the Central Limit Theorem, the mean of your sampling distribution should be very close to 2, and the standard deviation of your sampling distribution should be close to σn‾√=230‾‾‾√=0.365. Repeat #4-#6, but now with a sample of size n = 300 instead. Do your results match up well with the theorem?
+```{r}
+# create a vector with 30 NAs
+mean_samp2 <- rep(NA, 10000)
+
+# start a loop
+for(i in 1:10000) {
+  g_samp2 <- rgamma(300, shape = 1, scale = 2)
+  mean_samp2[i] <- mean(g_samp2)
+}
+# Convert vector to a tibble
+hist(mean_samp2)
+mean_samp2 <- tibble(mean_samp2)
+
+mean <- colMeans(mean_samp2, na.rm = TRUE)
+mean
+sd <- sapply(mean_samp2,sd, na.rm = TRUE)
+sd
+
+```
+on this sample the mean was close to 2 but the standard deviation is not close to hte values according the Central Limit Theorem.
