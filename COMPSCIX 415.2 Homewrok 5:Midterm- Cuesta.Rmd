@@ -62,6 +62,13 @@ Export the file into a comma-separated file and name it “rail_trail.csv”. Ma
 library(tidyverse)
 heights <- read_csv("/Users/dianacuesta/Compscisx-415-2/rail_trail.csv")
 glimpse(heights)
+
+```
+
+```{r}
+write_csv(heights, "/Users/dianacuesta/Compscisx-415-2/rail_trails.csv")
+heights <- read_csv("/Users/dianacuesta/Compscisx-415-2/rail_trails.csv")
+glimpse(heights)
 ```
 
 ###Visualization (6 points)
