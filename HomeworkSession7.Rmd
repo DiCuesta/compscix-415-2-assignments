@@ -73,24 +73,35 @@ tidy(model_mult_lm)
 
 ```
 
-What kind of relationship will these features have with our target?
-Can the relationship be estimated linearly?
-Are these good features, given the problem we are trying to solve?
-After fitting the model, output the coefficients and the R-squared using the broom package.
+
+####What kind of relationship will these features have with our target? 
+Depending the overal conditions of the materials and the number of feet above the ground the house has the price sale can increase of decrease
+###Can the relationship be estimated linearly? no
+###Are these good features, given the problem we are trying to solve? 
+I don't think these features are the best features to resolve the problem
+
+###After fitting the model, output the coefficients and the R-squared using the broom package.
 
 Answer these questions:
+####How would you interpret the coefficients on GrLivArea and OverallQual?
+Overallqual is a better predictor of the price sale thatn GRLivArea
 
-How would you interpret the coefficients on GrLivArea and OverallQual?
-How would you interpret the coefficient on NeighborhoodBrkSide?
-Are the features significant?
-Are the features practically significant?
-Is the model a good fit?
+###How would you interpret the coefficient on NeighborhoodBrkSide?
+
+###Are the features significant? 
+No, they are not.
+
+###Are the features practically significant?
+Yes, they are practically significant. Specially Neighborhood 
+
+###Is the model a good fit?
+No, it is not.
 
 
 ###Exercise 6
-###One downside of the linear model is that it is sensitive to unusual values because the distance incorporates a squared term. Fit a linear model to the simulated data below (use y as the target and x as the feature), and look at the resulting coefficients and R-squared. Rerun it about 5-6 times to generate different simulated datasets. What do you notice about the model’s coefficient on x and the R-squared values?
+####One downside of the linear model is that it is sensitive to unusual values because the distance incorporates a squared term. Fit a linear model to the simulated data below (use y as the target and x as the feature), and look at the resulting coefficients and R-squared. Rerun it about 5-6 times to generate different simulated datasets. What do you notice about the model’s coefficient on x and the R-squared values?
 
-They change every time we run the model.
+##They change every time we run the model.
 
 ```{r}
 sim1a <- tibble(
