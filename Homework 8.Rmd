@@ -6,7 +6,7 @@ output: html_document
 ---
 
 
-## Homework 8
+
 Create an R function that takes as its input argument a city name and creates a slippy leaflet map as its output. The leaflet map should already be zoomed in onto the city that is input into the function and should contain markers for each of the bike station locations, and each marker should show the number of bikes when hovered over by the mouse cursor (see example below). Feel free to add your own flourishes to the map.
 
 On your final html document I want to see the code and one slippy map for any of the given cities. Do not attempt to put multiple slippy maps on your html file - it may break.
@@ -28,14 +28,13 @@ data_bike <- fromJSON(url)
 
 m <- leaflet(data_bike) %>% addTiles() 
 m %>% setView(cord$lon, cord$lat, zoom = 20)
-m %>% addMarkers(~data_bike$position$lng, ~data_bike$position$lat, popup=~data_bike$number, label=~data_bike$number, options = markerOptions(riseOnHover = TRUE))
+m %>% addMarkers(~data_bike$position$lng, ~data_bike$position$lat, popup=data_bike$available_bikes)
 }
 
 ##Testing with Dubling
 maps_it ("Dublin")
 
-##Tesing with Seville
-maps_it ("Seville")
+
 ```
 
 
