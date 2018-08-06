@@ -1,0 +1,14 @@
+---
+title: "FInalExam"
+author: "Diana Cuesta"
+date: "August 5, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Exercise 1 - Sampling Distributions, Functions and For Loops (10 points)
+The exponential distribution has a rate parameter that controls how quickly the distribution decays and defines what the mean and standard deviation will be. In our case the rate = 1/10000, the mean = 10000 and the  standard deviation = 10000. You can sample from this exponential distribution in R using this code:
+
